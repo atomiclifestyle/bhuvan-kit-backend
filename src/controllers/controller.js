@@ -5,26 +5,6 @@ import axios from 'axios';
 
 // const proxyAgent = new HttpsProxyAgent(process.env.PROXY);
 
-const bhuvanApiRequest = async (url, method = 'GET', data = null) => {
-  try {
-    const config = {
-      method,
-      url: `${url}&token=${process.env.TOKEN}`,
-      timeout: 10000,
-      headers: {
-        'Content-Type': method === 'POST' ? 'application/json' : 'application/x-www-form-urlencoded',
-      },
-      httpsAgent: proxyAgent,
-      proxy: false,
-    };
-    if (data) config.data = data;
-    const response = await axios(config);
-    return response;
-  } catch (error) {
-    throw error;
-  }
-};
-
 export const getRouting = async (req, res) => {
   const { lat1, lon1, lat2, lon2 } = req.query;
   const url = `https://bhuvan-app1.nrsc.gov.in/api/routing/curl_routing_state.php?lat1=${lat1}&lon1=${lon1}&lat2=${lat2}&lon2=${lon2}&token=${process.env.ROUTE_TOKEN}`;
@@ -113,25 +93,6 @@ export const getEllipsoid = async (req, res) => {
       },
     });
     response.data.pipe(res);
-  } catch (error) {
-    if (error.response) {
-      res.status(error.response.status).json({
-        error: error.response.statusText,
-        details: error.response.data,
-      });
-    } else {
-      res.status(500).json({ error: error.message });
-    }
-  }
-};
-
-export const getFloodRunoff = async (req, res) => {
-  const { catchmentId, outletLat, outletLon } = req.query;
-  const url = `https://bhuvan-app1.nrsc.gov.in/api/floodrunoff?catchmentId=${catchmentId}&outletLat=${outletLat}&outletLon=${outletLon}`;
-
-  try {
-    const response = await bhuvanApiRequest(url);
-    res.status(response.status).json(response.data);
   } catch (error) {
     if (error.response) {
       res.status(error.response.status).json({

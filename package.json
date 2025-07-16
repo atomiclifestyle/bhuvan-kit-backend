@@ -6,8 +6,8 @@
     "scripts": {
         "dev": "node index.js",
         "build": "tsc",
-        "start": "node index.js",
         "local": "docker-compose -f src/docker/docker-compose.yml up -d && npx wait-on tcp:5432 && nodemon index.js",
+        "start": "docker-compose -f src/docker/docker-compose.yml up -d && npx wait-on tcp:5432 && node index.js",
         "stop": "docker-compose -f src/docker/docker-compose.yml down"
     },
     "dependencies": {

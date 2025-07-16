@@ -4,19 +4,18 @@ import {
   getThematicData,
   villageGeocoding,
   getEllipsoid,
-  getFloodRunoff,
 } from '../controllers/controller.js';
 import { createUserDB, executeUserQuery } from '../controllers/db.controller.js';
+import checkUserId from '../middlewares/check.user_id.js';
 
 const router = express.Router();
 
-router.get('/routing', getRouting);
-router.get('/thematic', getThematicData);
-router.get('/vg', villageGeocoding);
-router.get('/ellipsoid', getEllipsoid);
-router.get('/floodrunoff', getFloodRunoff);
+router.get('/routing', checkUserId, getRouting);
+router.get('/thematic', checkUserId, getThematicData);
+router.get('/vg', checkUserId, villageGeocoding);
+router.get('/ellipsoid', checkUserId, getEllipsoid);
 
-router.post('/create-user-db', createUserDB); 
-router.post('/execute-query/:user_id', executeUserQuery); 
+router.post('/create-user-db', checkUserId, createUserDB); 
+router.post('/execute-query', checkUserId, executeUserQuery); 
 
 export default router;

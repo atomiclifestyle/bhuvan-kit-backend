@@ -8,7 +8,7 @@ const adminSequelize = new Sequelize('postgres', 'admin', 'secret', {
 });
 
 export const createUserDB = async (req, res) => {
-  const { user_id } = req.body;
+  const user_id = req.headers['x-user-id'];
 
   if (!user_id) {
     return res.status(400).json({ error: 'Missing user_id in body' });
@@ -44,7 +44,7 @@ export const createUserDB = async (req, res) => {
 }
 
   export const executeUserQuery = async (req, res) => {
-    const { user_id } = req.params;
+    const user_id = req.headers['x-user-id'];
     const { query } = req.body;
 
     if (!user_id || !query) {
