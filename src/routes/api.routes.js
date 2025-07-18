@@ -1,11 +1,27 @@
-const express = require('express');
+import express from 'express';
+import {
+  getRouting,
+  getThematicData,
+  villageGeocoding,
+  getEllipsoid,
+} from '../controllers/controller.js';
+import { createUserDB, executeUserQuery } from '../controllers/db.controller.js';
+import checkUserId from '../middlewares/check.user_id.js';
+import { executeQuery } from '../controllers/central.db.controller.js';
+
 const router = express.Router();
-const bhuvanController = require('../controllers/controller');
 
-router.get('/routing', bhuvanController.getRouting);
-router.get('/thematic', bhuvanController.getThematicData);
-router.get('/vg', bhuvanController.villageGeocoding);
-router.get('/ellipsoid', bhuvanController.getEllipsoid);
-router.get('/floodrunoff', bhuvanController.getFloodRunoff);
+// Bhuvan API
+router.get('/routing', checkUserId, getRouting);
+router.get('/thematic', checkUserId, getThematicData);
+router.get('/vg', checkUserId, villageGeocoding);
+router.get('/ellipsoid', checkUserId, getEllipsoid);
 
-module.exports = router;
+// Individual DB
+router.post('/create-user-db', checkUserId, createUserDB); 
+router.post('/execute-query', checkUserId, executeUserQuery); 
+
+// Central DB
+router.post('/execute-central-query', checkUserId, executeQuery);
+
+export default router;
