@@ -4,10 +4,9 @@
     "main": "index.js",
     "type": "module",
     "scripts": {
-        "dev": "node index.js",
-        "local": "docker-compose -f src/docker/docker-compose.yml up -d && npx wait-on tcp:5432 && nodemon index.js",
-        "start": "docker-compose -f src/docker/docker-compose.yml up -d && npx wait-on tcp:5432 && node index.js",
-        "stop": "docker-compose -f src/docker/docker-compose.yml down"
+        "dev": "nodemon index.js",
+        "local": "nodemon index.js",
+        "start": "npm install && node index.js"
     },
     "dependencies": {
         "axios": "^1.6.8",

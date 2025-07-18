@@ -15,6 +15,9 @@ export const UserSchema = new Schema({
     type: String,
     required: true,
   },
+  dbPassword: {
+    type: String,
+  },
   isAdmin: {
     type: Boolean,
     required: true,
