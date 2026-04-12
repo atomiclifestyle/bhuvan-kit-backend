@@ -1,0 +1,7 @@
+LICENSE
+README.md
+node_modules
+.git
+.gitignore
+build
+dist
